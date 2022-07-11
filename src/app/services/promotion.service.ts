@@ -10,14 +10,20 @@ export class PromotionService {
   constructor() { }
 
   getPromotions(): Promise<Promotion[]> {
-    return Promise.resolve(PROMOTIONS);
+    return new Promise(resolve => {
+      setTimeout(() => resolve(PROMOTIONS), 2000)
+    });
   }
 
   getPromotion(id: string): Promise<Promotion> {
-    return Promise.resolve(PROMOTIONS.filter((promo) => (promo.id === id))[0]); //filtre les promotion selon l'id
+    return new Promise(resolve => {
+      setTimeout(() => resolve(PROMOTIONS.filter((promo) => (promo.id === id))[0]), 2000)
+    }); //filtre les promotion selon l'id
   }
 
   getFeaturedPromotion(): Promise<Promotion> {
-    return Promise.resolve(PROMOTIONS.filter((promo) => promo.featured)[0]);
+    return new Promise(resolve => {
+      setTimeout(() => resolve(PROMOTIONS.filter((promo) => promo.featured)[0]), 2000)
+    });
   }
 }
