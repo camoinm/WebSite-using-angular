@@ -1,19 +1,14 @@
-<div class="container"
-    fxLayout="row wrap"
-    fxLayout.sm="column"
-    fxLayout.xs="column"
-    fxLayoutAlign.gt-md="space-around center"
-    fxLayoutGap="10px" 
-    fxLayoutGap.xs="0">
+<div class="container" fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column"
+    fxLayoutAlign.gt-md="space-around center" fxLayoutGap="10px" fxLayoutGap.xs="0">
 
-  <div fxFlex="100">
-    <div>
-        <h3 *ngIf="dish">{{dish.name | uppercase}}</h3>
-      <hr>
+    <div fxFlex="100">
+        <div>
+            <h3 *ngIf="dish">{{dish.name | uppercase}}</h3>
+            <hr>
+        </div>
     </div>
-  </div>
 
-    <div fxFlex="40" *ngIf="dish">
+    <div fxFlex="100" *ngIf="dish">
         <mat-card>
             <mat-card-header>
                 <mat-card-title>
@@ -39,7 +34,7 @@
         </mat-card>
     </div>
 
-    <div fxFlex="40" *ngIf="dish">
+    <div fxFlex="100" *ngIf="dish">
         <mat-list>
             <h1>Comments</h1>
             <mat-list-item *ngFor="let comment of dish.comments">
@@ -49,8 +44,31 @@
             </mat-list-item>
         </mat-list>
     </div>
-    
+
+    <div fxFlex="100" *ngIf="dish">
+        <form novalidate [formGroup]="noteForm" #fform="ngForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="full-width">
+                <input matInput formControlName="name" placeholder="Name" type="text" required>
+                <mat-error *ngIf="formErrors?.['name']">
+                    {{ formErrors?.['name'] }}
+                </mat-error>
+            </mat-form-field>
+            <td>
+                <mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1" value="5"></mat-slider>
+            </td>
+            <mat-form-field class="full-width">
+                <textarea matInput formControlName="comment" placeholder="Your Comment" type="text" required></textarea>
+                <mat-error *ngIf="formErrors?.['comment']">
+                    {{ formErrors?.['comment'] }}
+                </mat-error>
+            </mat-form-field>
+            <button type="submit" mat-button class="background-primary text-floral-white"
+                [disabled]="noteForm.invalid">Submit</button>
+        </form>
+    </div>
+
     <div fxFlex [hidden]="dish">
-        <mat-spinner></mat-spinner> <h4>Loading . . .</h4>
+        <mat-spinner></mat-spinner>
+        <h4>Loading . . .</h4>
     </div>
 </div>
