@@ -60,7 +60,7 @@ export class DishdetailsComponent implements OnInit {
     this.location.back();
   }
 
-//Trouver le plat précédent/suivant (pour les bouttons de navigation entre plats)
+  //Trouver le plat précédent/suivant (pour les bouttons de navigation entre plats)
   setPrevNext(dishId: string) {
     const index = this.dishIds.indexOf(dishId);
     //calculs avec % pour les cas aux extrémités (premier et dernier plat)
@@ -111,5 +111,4 @@ export class DishdetailsComponent implements OnInit {
     });
     this.noteFormDirective.resetForm();
   }
-
 }
