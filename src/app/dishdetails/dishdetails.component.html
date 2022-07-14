@@ -42,19 +42,23 @@
                 <p matLine>{{comment.rating}} Stars</p>
                 <p matLine>-- {{comment.author}} {{comment.date | date}}</p>
             </mat-list-item>
+            <mat-list-item *ngIf="noteForm.valid">
+                <p matLine>{{noteForm.value.comment}}</p>
+                <p matLine>{{noteForm.value.rating}} Stars</p>
+                <p matLine>-- {{noteForm.value.author}} {{noteForm.value.date | date}}</p>
+            </mat-list-item>
         </mat-list>
     </div>
-
     <div fxFlex="100" *ngIf="dish">
         <form novalidate [formGroup]="noteForm" #fform="ngForm" (ngSubmit)="onSubmit()">
             <mat-form-field class="full-width">
-                <input matInput formControlName="name" placeholder="Name" type="text" required>
-                <mat-error *ngIf="formErrors?.['name']">
-                    {{ formErrors?.['name'] }}
+                <input matInput formControlName="author" placeholder="Name" type="text" required>
+                <mat-error *ngIf="formErrors?.['author']">
+                    {{ formErrors?.['author'] }}
                 </mat-error>
             </mat-form-field>
             <td>
-                <mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1" value="5"></mat-slider>
+                <mat-slider formControlName="rating" thumbLabel tickInterval="1" min="1" max="5" step="1" value="5"></mat-slider>
             </td>
             <mat-form-field class="full-width">
                 <textarea matInput formControlName="comment" placeholder="Your Comment" type="text" required></textarea>

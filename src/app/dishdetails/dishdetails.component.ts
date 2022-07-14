@@ -5,6 +5,7 @@ import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
 import { switchMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, NgForm} from '@angular/forms';
+import { Comment } from '../shared/comment';
 
 @Component({
   selector: 'app-dishdetails',
@@ -21,24 +22,25 @@ export class DishdetailsComponent implements OnInit {
 
   noteForm: FormGroup;
   note: Comment;
+  rating: number;
   comment: string;
   @ViewChild('fform') noteFormDirective: NgForm;
 
   formErrors: {[index: string]:any} = {//: {[index: string]:any} because need to specify index type
-    'name': '',
-    'comment': ''
+    'comment': '',
+    'author': ''
   };
 
   validationMessages: {[index: string]:any} = {
-    'name': {
-      'required': 'Name is required.',
-      'minLength': 'Name must be at least 2 characters long.',
-      'maxLength': 'Name cannot be more than 25 characters.'
-    },
     'comment': {
       'required': 'Comment is required.',
       'minLength': 'Comment must be at least 3 characters long.',
       'maxLength': 'Comment cannot be more than 256 characters.'
+    },
+    'author': {
+      'required': 'Name is required.',
+      'minLength': 'Name must be at least 2 characters long.',
+      'maxLength': 'Name cannot be more than 25 characters.'
     }
   }
 
@@ -70,8 +72,10 @@ export class DishdetailsComponent implements OnInit {
 
   createForm(): void {
     this.noteForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
-      comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(256)] ]
+      rating: 5,
+      comment: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(256)] ],
+      author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
+      date : ''
     });
 
     this.noteForm.valueChanges
@@ -103,12 +107,17 @@ export class DishdetailsComponent implements OnInit {
   
   onSubmit() {
     this.note = this.noteForm.value;
-
+    this.note.date = Date();
     console.log(this.note);
+    
+    this.dish.comments.push(this.note);//add note in the comment list
+
+    this.noteFormDirective.resetForm(this.rating);
     this.noteForm.reset({
-      name: '',
-      comment: ''
+      rating: 5,
+      comment: '',
+      author: '',
+      date: ''
     });
-    this.noteFormDirective.resetForm();
   }
 }
