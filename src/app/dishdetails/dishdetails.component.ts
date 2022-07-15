@@ -109,9 +109,7 @@ export class DishdetailsComponent implements OnInit {
     this.note = this.noteForm.value;
     this.note.date = Date();
     console.log(this.note);
-    
     this.dish.comments.push(this.note);//add note in the comment list
-
     this.noteFormDirective.resetForm(this.rating);
     this.noteForm.reset({
       rating: 5,

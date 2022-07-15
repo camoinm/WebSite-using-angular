@@ -1,5 +1,10 @@
-<div class="container" fxLayout="row wrap" fxLayout.sm="column" fxLayout.xs="column"
-    fxLayoutAlign.gt-md="space-around center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+<div class="container"
+    fxLayout="row wrap"
+    fxLayout.sm="column"
+    fxLayout.xs="column"
+    fxLayoutAlign.gt-md="space-around center"
+    fxLayoutGap="10px"
+    fxLayoutGap.xs="0">
 
     <div fxFlex="100">
         <div>
@@ -45,7 +50,7 @@
             <mat-list-item *ngIf="noteForm.valid">
                 <p matLine>{{noteForm.value.comment}}</p>
                 <p matLine>{{noteForm.value.rating}} Stars</p>
-                <p matLine>-- {{noteForm.value.author}} {{noteForm.value.date | date}}</p>
+                <p matLine>-- {{noteForm.value.author}}</p>
             </mat-list-item>
         </mat-list>
     </div>
