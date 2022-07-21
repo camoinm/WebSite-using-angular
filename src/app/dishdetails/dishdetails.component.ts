@@ -28,6 +28,8 @@ export class DishdetailsComponent implements OnInit {
   comment: string;
   @ViewChild('fform') noteFormDirective: NgForm;
 
+  dishcopy: Dish;
+
   formErrors: {[index: string]:any} = {//: {[index: string]:any} because need to specify index type
     'comment': '',
     'author': ''
@@ -58,7 +60,7 @@ export class DishdetailsComponent implements OnInit {
     this.dishservice.getDishIds()
       .subscribe(dishIds => this.dishIds = dishIds);
     this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-      .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
         errmess => this.errMess = <any>errmess );
   }
 
@@ -113,7 +115,12 @@ export class DishdetailsComponent implements OnInit {
     this.note = this.noteForm.value;
     this.note.date = Date();
     console.log(this.note);
-    this.dish.comments.push(this.note);//add note in the comment list
+    this.dishcopy.comments.push(this.note);//add note in the comment list
+    this.dishservice.putDish(this.dishcopy)
+      .subscribe(dish => {
+        this.dish = dish; this.dishcopy = dish;
+      },
+      errmess => { this.dish != null; this.dishcopy != null; this.errMess = <any>errmess; });
     this.noteFormDirective.resetForm(this.rating);
     this.noteForm.reset({
       rating: 5,
