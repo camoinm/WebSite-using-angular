@@ -20,6 +20,8 @@ export class DishdetailsComponent implements OnInit {
   prev: string;
   next: string;
 
+  errMess: string;
+
   noteForm: FormGroup;
   note: Comment;
   rating: number;
@@ -56,7 +58,8 @@ export class DishdetailsComponent implements OnInit {
     this.dishservice.getDishIds()
       .subscribe(dishIds => this.dishIds = dishIds);
     this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-      .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+      .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
+        errmess => this.errMess = <any>errmess );
   }
 
   goBack(): void {

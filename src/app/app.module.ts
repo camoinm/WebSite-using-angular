@@ -30,11 +30,12 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { LoginComponent } from './login/login.component';
 
-import { DishService } from "./services/dish.service";
-import { PromotionService } from "./services/promotion.service";
-import { LeaderService } from "./services/leader.service";
+import { DishService } from './services/dish.service';
+import { PromotionService } from './services/promotion.service';
+import { LeaderService } from './services/leader.service';
+import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
-import { baseURL } from "./shared/baseurl";
+import { baseURL } from './shared/baseurl';
 
 import 'hammerjs';
 
@@ -76,6 +77,7 @@ import 'hammerjs';
     DishService,
     PromotionService,
     LeaderService,
+    ProcessHTTPMsgService,
     { provide: 'BaseURL', useValue: baseURL }
   ],
   entryComponents: [
