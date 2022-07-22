@@ -6,14 +6,7 @@
     fxLayoutGap="10px"
     fxLayoutGap.xs="0">
 
-    <div fxFlex="100">
-        <div>
-            <h3 *ngIf="dish">{{dish.name | uppercase}}</h3>
-            <hr>
-        </div>
-    </div>
-
-    <div fxFlex="100" *ngIf="dish">
+    <div fxFlex="40" *ngIf="dish" [@visibility]="visibility" [@expand]>
         <mat-card>
             <mat-card-header>
                 <mat-card-title>
@@ -39,7 +32,7 @@
         </mat-card>
     </div>
 
-    <div fxFlex="100" *ngIf="dish">
+    <div fxFlex="40" *ngIf="dish" [@visibility]="visibility" [@expand]>
         <mat-list>
             <h1>Comments</h1>
             <mat-list-item *ngFor="let comment of dish.comments">
@@ -54,7 +47,7 @@
             </mat-list-item>
         </mat-list>
     </div>
-    <div fxFlex="100" *ngIf="dish">
+    <div fxFlex="100" *ngIf="dish" [@expand]>
         <form novalidate [formGroup]="noteForm" #fform="ngForm" (ngSubmit)="onSubmit()">
             <p>
                 <mat-form-field class="full-width">

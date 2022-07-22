@@ -6,11 +6,23 @@ import { DishService } from '../services/dish.service';
 import { switchMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, NgForm} from '@angular/forms';
 import { Comment } from '../shared/comment';
+import { visibility, flyInOut, expand } from '../animations/app.animations';
 
 @Component({
   selector: 'app-dishdetails',
   templateUrl: './dishdetails.component.html',
-  styleUrls: ['./dishdetails.component.scss']
+  styleUrls: ['./dishdetails.component.scss'],
+  // tslint:disable-next-line:use-host-property-decorator
+  host: {
+    '[@flyInOut]': 'true',
+    'style': 'display: block;'
+  },
+  animations: [
+    flyInOut(),
+    visibility(),
+    expand()
+  ],
+  
 })
 
 export class DishdetailsComponent implements OnInit {
@@ -29,6 +41,8 @@ export class DishdetailsComponent implements OnInit {
   @ViewChild('fform') noteFormDirective: NgForm;
 
   dishcopy: Dish;
+
+  visibility = 'shown';
 
   formErrors: {[index: string]:any} = {//: {[index: string]:any} because need to specify index type
     'comment': '',
@@ -59,8 +73,8 @@ export class DishdetailsComponent implements OnInit {
   ngOnInit() {
     this.dishservice.getDishIds()
       .subscribe(dishIds => this.dishIds = dishIds);
-    this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+    this.route.params.pipe(switchMap((params: Params) => {this.visibility = 'hidden'; return this.dishservice.getDish(params['id'])} ))
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown'; },
         errmess => this.errMess = <any>errmess );
   }
 
